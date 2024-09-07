@@ -10,20 +10,49 @@ public class GameManager : MonoBehaviour {
 	#region Private Vars
 	[Tooltip("The total time the player has to play the game in minutes (e.g. 1 = 60 seconds, 0.5 = 30 seconds)")]
 	[SerializeField] private float totalTime = 10.0f;
-	[Tooltip("The number of missions the player has to complete")]
-	[SerializeField] private int missionNumber = 0;
 	[Tooltip("Put the Mission Scriptable Objects in here")]
 	[SerializeField] private List<So_Missions> missions;
 
+	/// <summary>
+	/// Bool for if the game is active
+	/// </summary>
 	private bool isGameActive = false;
+	/// <summary>
+	/// Bool for if the mission is active
+	/// </summary>
 	private bool isMissionActive = false;
+	/// <summary>
+	/// Players Current Score
+	/// </summary>
 	private int score = 0;
+	/// <summary>
+	/// Players High Score
+	/// </summary>
 	private int highScore = 0;
+	/// <summary>
+	/// Number of rooms in the game
+	/// </summary>
 	private int numRooms = 12;
-	private int numCurrentMission = 0;
+	/// <summary>
+	/// Var to keep track of the current mission type
+	/// </summary>
+	private int numCurrentMissionType = 0;
+	/// <summary>
+	/// Amount of time the player has been playing
+	/// </summary>
 	private float time = 0.0f;
+	/// <summary>
+	/// Amount of time the player has been doing the current mission
+	/// </summary>
 	private float missionTime = 0.0f;
+	/// <summary>
+	/// List of how much time the player took per missions
+	/// </summary>
 	private List<float> missionTimes;
+	/// <summary>
+	/// List of missions the player has done
+	/// </summary>
+	private List<int> missionList;
 	#endregion
 
 	#region Unity Methods
@@ -47,9 +76,11 @@ public class GameManager : MonoBehaviour {
 			time += Time.deltaTime;
 			if (isMissionActive) {
 				missionTime += Time.deltaTime;
-				if (missionTime >= missions[numCurrentMission].GetMissionTime()) {
+				if (missionTime >= missions[numCurrentMissionType].GetMissionTime()) {
 					EndMission();
 				}
+			} else {
+				StartMission();
 			}
 			if (time >= totalTime * 60) {
 				EndGame();
@@ -94,6 +125,8 @@ public class GameManager : MonoBehaviour {
 	#region Mission Methods
 	[Tooltip("Begins the current mission")]
 	public void StartMission() {
+		numCurrentMissionType = Random.Range(1, missions.Count + 1);
+		missionList.Add(numCurrentMissionType);
 		isMissionActive = true;
 		missionTime = 0.0f;
 	}
@@ -108,7 +141,7 @@ public class GameManager : MonoBehaviour {
 	[Tooltip("Ends the current mission without completion")]
 	public void EndMission() {
 		isMissionActive = false;
-		missionTimes.Add(missions[numCurrentMission].GetMissionTime());
+		missionTimes.Add(missions[numCurrentMissionType].GetMissionTime());
 		missionTime = 0.0f;
 	}
 	#endregion
@@ -124,7 +157,7 @@ public class GameManager : MonoBehaviour {
 	}
 
 	public int GetMissionCount() {
-		return missionTimes.Count;
+		return missionList.Count;
 	}
 	#endregion
 	#endregion
