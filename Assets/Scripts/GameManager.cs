@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour {
 	// References
@@ -12,6 +13,8 @@ public class GameManager : MonoBehaviour {
 	[SerializeField] private float totalTime = 10.0f;
 	[Tooltip("Put the Mission Scriptable Objects in here")]
 	[SerializeField] private List<So_Missions> missions;
+	[Tooltip("List of rooms")]
+	[SerializeField] private List<GameObject> rooms;
 
 	/// <summary>
 	/// Bool for if the game is active
@@ -30,13 +33,13 @@ public class GameManager : MonoBehaviour {
 	/// </summary>
 	private int highScore = 0;
 	/// <summary>
-	/// Number of rooms in the game
-	/// </summary>
-	private int numRooms = 12;
-	/// <summary>
-	/// Var to keep track of the current mission type
+	/// Keeps track of the current mission type
 	/// </summary>
 	private int numCurrentMissionType = 0;
+	/// <summary>
+	/// Keeps track of the current room
+	/// </summary>
+	private int numCurrentRoom = 0;
 	/// <summary>
 	/// Amount of time the player has been playing
 	/// </summary>
@@ -126,6 +129,7 @@ public class GameManager : MonoBehaviour {
 	[Tooltip("Begins the current mission")]
 	public void StartMission() {
 		numCurrentMissionType = Random.Range(1, missions.Count + 1);
+		numCurrentRoom = Random.Range(1, rooms.Count + 1);
 		missionList.Add(numCurrentMissionType);
 		isMissionActive = true;
 		missionTime = 0.0f;
