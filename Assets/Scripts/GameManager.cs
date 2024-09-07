@@ -1,7 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using Random = UnityEngine.Random;
 public class GameManager : MonoBehaviour {
 	// References
 	public static GameManager instance;
@@ -158,6 +159,12 @@ public class GameManager : MonoBehaviour {
 
 	public int GetMissionCount() {
 		return missionList.Count;
+	}
+	public event Action onMissionStart;
+	public void StartTheMission(){
+		if(onMissionStart != null){
+			onMissionStart();
+		}
 	}
 	#endregion
 	#endregion
