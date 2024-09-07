@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 
@@ -8,13 +9,15 @@ public class PlayerController : MonoBehaviour
    public float jumpForce = 5f;
    public Transform playerCamera;
 
-   private CharacterController controller;
-   private float xRotation = 0f;
+   private CharacterController _controller;
 
+   private float _xRotation;
+   private int _roomNumber;
+   
    // Start is called before the first frame update
    void Start()
    {
-      controller = GetComponent<CharacterController>();
+      _controller = GetComponent<CharacterController>();
       Cursor.lockState = CursorLockMode.Locked; // Lock cursor to center screen
       Cursor.visible = false;
    }
@@ -34,13 +37,13 @@ public class PlayerController : MonoBehaviour
 
       // Move relative to the camera's forward and right direction
       Vector3 moveDirection = transform.right * moveX + transform.forward * moveZ;
-      controller.Move(moveDirection * (moveSpeed * Time.deltaTime));
+      _controller.Move(moveDirection * (moveSpeed * Time.deltaTime));
 
       // Optional: Jump logic (spacebar)
-      if (Input.GetButtonDown("Jump") && controller.isGrounded)
+      if (Input.GetButtonDown("Jump") && _controller.isGrounded)
       {
          Vector3 jump = Vector3.up * jumpForce;
-         controller.Move(jump * Time.deltaTime);
+         _controller.Move(jump * Time.deltaTime);
       }
    }
 
@@ -54,8 +57,27 @@ public class PlayerController : MonoBehaviour
       transform.Rotate(Vector3.up * mouseX);
 
       // Rotate the camera vertically based on mouse Y movement
-      xRotation -= mouseY;
-      xRotation = Mathf.Clamp(xRotation, -90f, 90f); // Limit up/down rotation
-      playerCamera.localRotation = Quaternion.Euler(xRotation, 0f, 0f);
+      _xRotation -= mouseY;
+      _xRotation = Mathf.Clamp(_xRotation, -90f, 90f); // Limit up/down rotation
+      playerCamera.localRotation = Quaternion.Euler(_xRotation, 0f, 0f);
+   }
+
+
+   private void OnTriggerStay(Collider other)
+   {
+      if (other.CompareTag("Room"))
+      {
+         _roomNumber = int.Parse(other.gameObject.name);
+      }
+   }
+
+   private void OnTriggerEnter(Collider other)
+   {
+      _roomNumber = 0;
+   }
+
+   public int get_curren_room_number()
+   {
+      return _roomNumber;
    }
 }
