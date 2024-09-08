@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class AI : MonoBehaviour
@@ -11,7 +12,7 @@ public class AI : MonoBehaviour
     void Start()
     {
         agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
-        
+        GameManager.OnMissionStarted += save_mission_room_number;
         // Move to a random point on the NavMesh when the game starts
         MoveToRandomPoint();
     }
@@ -45,6 +46,24 @@ public class AI : MonoBehaviour
         return Vector3.zero;
     }
 
+    
+    Vector3 GetTargetPointOnNavMesh(Vector3 origin, float distance)
+    {
+        // Generate a random point within a sphere of given radius (distance)
+        Vector3 randomDirection = Random.insideUnitSphere * distance;
+        randomDirection += origin;
+
+        // Try to find a point on the NavMesh near the random direction
+        UnityEngine.AI.NavMeshHit hit;
+        if (UnityEngine.AI.NavMesh.SamplePosition(randomDirection, out hit, distance, UnityEngine.AI.NavMesh.AllAreas))
+        {
+            // Return the point on the NavMesh
+            return hit.position;
+        }
+
+        // Return zero vector if no valid point is found
+        return Vector3.zero;
+    }
     // Optional: Keep moving to random points in Update method
     void Update()
     {
@@ -59,6 +78,20 @@ public class AI : MonoBehaviour
     public void MoveToTargetPoint(Vector3 targetPoint)
     {
         agent.SetDestination(targetPoint);
+    }
+
+    private int mission_room_number = 0;
+    private void save_mission_room_number(int roomNumber)
+    {
+        mission_room_number = roomNumber;
+        var rooms = GameObject.FindGameObjectsWithTag("Room");
+        
+        var targetRoom = rooms.FirstOrDefault(x => int.Parse(x.name) == mission_room_number);
+        
+        MoveToTargetPoint(GetTargetPointOnNavMesh(targetRoom.transform.localPosition, 5));
+        
+        
+        
     }
 
 }
