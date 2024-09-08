@@ -3,8 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ScreenController : MonoBehaviour
+public class PulsatingController : MonoBehaviour
 {
+
     [SerializeField] private Material pulseMaterial;
     [SerializeField] private float pulseSpeed = 2f;
     [SerializeField] private float pulseAmount = 0;
@@ -16,6 +17,11 @@ public class ScreenController : MonoBehaviour
     public void Start()
     {
         StartCoroutine(PulseOverTime());
+    }
+
+    private void OnDestroy()
+    {
+        pulseMaterial.color = new Color(pulseMaterial.color.r, pulseMaterial.color.g, pulseMaterial.color.b, 0f);
     }
 
     private void Update()
