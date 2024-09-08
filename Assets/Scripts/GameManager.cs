@@ -1,15 +1,19 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour {
 	// References
 	public static GameManager instance;
 
+	InfoPopulator infoPopulator = new InfoPopulator();
+
 	// public variables
 	#region Private Vars
 	[Tooltip("The total time the player has to play the game in minutes (e.g. 1 = 60 seconds, 0.5 = 30 seconds)")]
-	[SerializeField] private float totalTime = 10.0f;
+	[SerializeField] private float totalTime = 1.0f;
 	[Tooltip("Put the Mission Scriptable Objects in here")]
 	[SerializeField] private List<So_Missions> missions;
 
@@ -30,29 +34,9 @@ public class GameManager : MonoBehaviour {
 	/// </summary>
 	private int highScore = 0;
 	/// <summary>
-	/// Number of rooms in the game
-	/// </summary>
-	private int numRooms = 12;
-	/// <summary>
-	/// Var to keep track of the current mission type
-	/// </summary>
-	private int numCurrentMissionType = 0;
-	/// <summary>
 	/// Amount of time the player has been playing
 	/// </summary>
 	private float time = 0.0f;
-	/// <summary>
-	/// Amount of time the player has been doing the current mission
-	/// </summary>
-	private float missionTime = 0.0f;
-	/// <summary>
-	/// List of how much time the player took per missions
-	/// </summary>
-	private List<float> missionTimes;
-	/// <summary>
-	/// List of missions the player has done
-	/// </summary>
-	private List<int> missionList;
 	#endregion
 
 	#region Unity Methods
@@ -67,7 +51,7 @@ public class GameManager : MonoBehaviour {
 
 	// Start is called before the first frame update
 	void Start() {
-
+		infoPopulator.Populate();
 	}
 
 	// Update is called once per frame
@@ -75,10 +59,7 @@ public class GameManager : MonoBehaviour {
 		if (isGameActive) {
 			time += Time.deltaTime;
 			if (isMissionActive) {
-				missionTime += Time.deltaTime;
-				if (missionTime >= missions[numCurrentMissionType].GetMissionTime()) {
-					EndMission();
-				}
+
 			} else {
 				StartMission();
 			}
@@ -103,7 +84,6 @@ public class GameManager : MonoBehaviour {
 		if (score > highScore) {
 			highScore = score;
 		}
-		GetMissionCount();
 	}
 
 	[Tooltip("Edit the players score. Negative numbers subtract score.")]
@@ -125,40 +105,22 @@ public class GameManager : MonoBehaviour {
 	#region Mission Methods
 	[Tooltip("Begins the current mission")]
 	public void StartMission() {
-		numCurrentMissionType = Random.Range(1, missions.Count + 1);
-		missionList.Add(numCurrentMissionType);
 		isMissionActive = true;
-		missionTime = 0.0f;
-	}
-
-	[Tooltip("Completes the current mission")]
-	public void CompleteMission() {
-		isMissionActive = false;
-		missionTimes.Add(missionTime);
-		missionTime = 0.0f;
-	}
-
-	[Tooltip("Ends the current mission without completion")]
-	public void EndMission() {
-		isMissionActive = false;
-		missionTimes.Add(missions[numCurrentMissionType].GetMissionTime());
-		missionTime = 0.0f;
 	}
 	#endregion
 
 	#region Getters
 	[Tooltip("Gets the current time")]
-	public float GetTime() {
-		return time;
-	}
+	public float GetTime() => time;
 
-	public int GetScore() {
-		return score;
-	}
-
-	public int GetMissionCount() {
-		return missionList.Count;
-	}
+	public int GetScore() => score;
+	
+	public bool GetPatientSex() => infoPopulator.sex;
+	public string GetPatientName() => infoPopulator.patientName;
+	public int GetBloodPressure() => infoPopulator.bloodPressure;
+	public bool GetIV() => infoPopulator.iv;
+	public int GetMedication() => infoPopulator.medication;
+	public int GetAssessment() => infoPopulator.assessment;
 	#endregion
 	#endregion
 }
