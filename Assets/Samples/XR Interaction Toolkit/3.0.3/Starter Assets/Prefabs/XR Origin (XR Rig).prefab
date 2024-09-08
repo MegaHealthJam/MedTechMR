@@ -1137,6 +1137,7 @@ MonoBehaviour:
   headTransform: {fileID: 1767192434}
   wristTransform: {fileID: 202364688}
   objectToEnable: {fileID: 4974244090315439633}
+  otherPanelObject: {fileID: 0}
   maxLookAngle: 30
   maxDistance: 0.5
 --- !u!1 &1787516059220952802
