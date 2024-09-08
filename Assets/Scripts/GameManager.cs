@@ -58,7 +58,19 @@ public class GameManager : MonoBehaviour {
 	void Update() {
 		if (isGameActive) {
 			time += Time.deltaTime;
+
 			if (time >= totalTime * 60.0f) {
+				//Set the old panel to off
+					wristCanvasPanel.SetActive(false);
+					for(int i = 0; i < wristCanvasPanel.transform.childCount; i++){
+						var child = wristCanvasPanel.transform.GetChild(i).gameObject;
+						if(child != null){
+							child.SetActive(false);
+						}
+					}
+				//Set new panel on
+		wristFailPanel.SetActive(true);	
+				//Remove the wrist panel and show the patient died panel
 				EndGame();
 			}
 		}
@@ -85,19 +97,7 @@ public class GameManager : MonoBehaviour {
 	public string EndGame() {
 		isGameActive = false;
 		// calculate the final score for the player in percentage
-		
-		//Set the old panel to off
-		wristCanvasPanel.SetActive(false);
-		for(int i = 0; i < wristCanvasPanel.transform.childCount; i++){
-			var child = wristCanvasPanel.transform.GetChild(i).gameObject;
-			if(child != null){
-				child.SetActive(false);
-			}
-		}
-		//Set new panel on
-		wristFailPanel.SetActive(true);
 		return score * 25 + "%";
-
 		
 	}
 
