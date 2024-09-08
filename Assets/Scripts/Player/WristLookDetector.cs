@@ -7,7 +7,8 @@ public class WristLookDetector : MonoBehaviour
     public Transform headTransform; // Reference to the VR headset (head)
     public Transform wristTransform; // Reference to the wrist (hand) object
     public GameObject objectToEnable; // The object to enable when looking at wrist
-
+    public GameObject otherPanelObject;
+    
     public float maxLookAngle = 30f; // Maximum angle between head and wrist for detection
     public float maxDistance = 0.5f; // Maximum distance between head and wrist for detection
 
@@ -55,7 +56,7 @@ public class WristLookDetector : MonoBehaviour
     // Enable or disable the object based on the player's wrist view
     void EnableObject(bool enable)
     {
-        if (objectToEnable != null)
+        if (objectToEnable != null || !otherPanelObject.activeInHierarchy)
         {
             objectToEnable.SetActive(enable);
         }
