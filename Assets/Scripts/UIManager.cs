@@ -8,7 +8,9 @@ public class UIManager : MonoBehaviour {
 
 	public GameObject patientInfotext;
 	public GameObject timertext;
-	public GameObject ContinueButton;
+	public GameObject continueButton;
+	public GameObject scoreText;
+	public GameObject patientNameText;
 
 	void Awake() {
 		if (instance == null) {
@@ -109,6 +111,14 @@ public class UIManager : MonoBehaviour {
 	}
 
 	public void ActivateContinueButton() {
-		ContinueButton.SetActive(true);
+		continueButton.SetActive(true);
+	}
+
+	public void UpdateScore() {
+		scoreText.GetComponent<TMP_Text>().text = "Score: " + GameManager.instance.EndGame();
+	}
+
+	public void UpdatePatientName() {
+		patientNameText.GetComponent<TMP_Text>().text = GameManager.instance.GetPatientName;
 	}
 }
