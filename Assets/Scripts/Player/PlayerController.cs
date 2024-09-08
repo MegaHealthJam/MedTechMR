@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+   [SerializeField] private PulsatingController pulseController;
    public float moveSpeed = 5f;
    public float lookSpeed = 2f;
    public float jumpForce = 5f;
@@ -14,6 +15,8 @@ public class PlayerController : MonoBehaviour
    private float _xRotation;
    private int _roomNumber;
    
+   
+   public PulsatingController PulseController => pulseController;
    // Start is called before the first frame update
    void Start()
    {

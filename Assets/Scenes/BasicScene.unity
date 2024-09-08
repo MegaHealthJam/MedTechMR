@@ -1515,6 +1515,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4914096738079701611, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
+      propertyPath: pulseController
+      value: 
+      objectReference: {fileID: 564762876}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1713,6 +1717,17 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 0
+--- !u!114 &564762876 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 9031727139994634688, guid: f6336ac4ac8b4d34bc5072418cdc62a0, type: 3}
+  m_PrefabInstance: {fileID: 441087506}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5285603852bb9b74b8cb000dd65fe26e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &584155191
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -41467,6 +41482,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 598719063792849347, guid: 21325884a47c3d445a821b76aae9e216, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -3.9181366
+      objectReference: {fileID: 0}
+    - target: {fileID: 598719063792849347, guid: 21325884a47c3d445a821b76aae9e216, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 3.768105
+      objectReference: {fileID: 0}
     - target: {fileID: 4071068914691220154, guid: 21325884a47c3d445a821b76aae9e216, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -41510,6 +41533,54 @@ PrefabInstance:
     - target: {fileID: 4680345026552286043, guid: 21325884a47c3d445a821b76aae9e216, type: 3}
       propertyPath: m_Name
       value: Hospital
+      objectReference: {fileID: 0}
+    - target: {fileID: 4900146740217048073, guid: 21325884a47c3d445a821b76aae9e216, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 4.0818634
+      objectReference: {fileID: 0}
+    - target: {fileID: 4900146740217048073, guid: 21325884a47c3d445a821b76aae9e216, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 3.768105
+      objectReference: {fileID: 0}
+    - target: {fileID: 5436950796440733274, guid: 21325884a47c3d445a821b76aae9e216, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -3.936264
+      objectReference: {fileID: 0}
+    - target: {fileID: 5436950796440733274, guid: 21325884a47c3d445a821b76aae9e216, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 3.7862325
+      objectReference: {fileID: 0}
+    - target: {fileID: 7644795237561694686, guid: 21325884a47c3d445a821b76aae9e216, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 6.0818634
+      objectReference: {fileID: 0}
+    - target: {fileID: 7644795237561694686, guid: 21325884a47c3d445a821b76aae9e216, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7644795237561694686, guid: 21325884a47c3d445a821b76aae9e216, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -6.2318873
+      objectReference: {fileID: 0}
+    - target: {fileID: 7721466767609685381, guid: 21325884a47c3d445a821b76aae9e216, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 6.0818634
+      objectReference: {fileID: 0}
+    - target: {fileID: 7721466767609685381, guid: 21325884a47c3d445a821b76aae9e216, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 1.768105
+      objectReference: {fileID: 0}
+    - target: {fileID: 7857855855635668957, guid: 21325884a47c3d445a821b76aae9e216, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 6.0818634
+      objectReference: {fileID: 0}
+    - target: {fileID: 7857855855635668957, guid: 21325884a47c3d445a821b76aae9e216, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7857855855635668957, guid: 21325884a47c3d445a821b76aae9e216, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -2.2318912
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
