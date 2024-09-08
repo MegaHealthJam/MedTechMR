@@ -1,19 +1,26 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class UIManager : MonoBehaviour {
-	public GameObject patientSextext;
-	public GameObject patientNametext;
-	public GameObject bloodPressureText;
-	public GameObject ivText;
-	public GameObject medicationText;
-	public GameObject assessmentText;
+	public static UIManager instance;
+
+	public GameObject patientInfotext;
 	public GameObject timertext;
+	public GameObject ContinueButton;
+
+	void Awake() {
+		if (instance == null) {
+			instance = this;
+		} else {
+			Destroy(this.gameObject);
+		}
+	}
 
 	// Start is called before the first frame update
 	void Start() {
-		GetInfo();
+		patientInfotext.GetComponent<TMP_Text>().text = GetInfo();
 	}
 
 	// Update is called once per frame
@@ -22,78 +29,86 @@ public class UIManager : MonoBehaviour {
 	}
 
 	private void UpdateTimer() {
-		float timeleft = GameManager.instance.GetTotalTime() - GameManager.instance.GetTime();
+		float timeleft = (GameManager.instance.GetTotalTime * 60) - GameManager.instance.GetTime;
 		int minutes = (int) timeleft / 60;
 		int seconds = (int) timeleft % 60;
-		timertext.GetComponent<TextMesh>().text = string.Format("{0:0}:{1:00}", minutes, seconds);
+		timertext.GetComponent<TMP_Text>().text = string.Format("{0:0}:{1:00}", minutes, seconds);
 	}
 
-	private void GetInfo() {
-		if (GameManager.instance.GetPatientSex()) {
-			patientSextext.GetComponent<TextMesh>().text = "Female";
+	private string GetInfo() {
+		string final = "";
+		final += "Name: " + GameManager.instance.GetPatientName + "\n";
+		
+		if (GameManager.instance.GetPatientSex) {
+			final += "Sex: " + "Female" + "\n";
 		} else {
-			patientSextext.GetComponent<TextMesh>().text = "Male";
+			final += "Sex: " + "Male" + "\n";
 		}
 
-		patientNametext.GetComponent<TextMesh>().text = GameManager.instance.GetPatientName();
 
-		switch (GameManager.instance.GetBloodPressure()) {
+		switch (GameManager.instance.GetBloodPressure) {
 			case 0: {
-				bloodPressureText.GetComponent<TextMesh>().text = "Low";
+				final += "Blood Pressre: " + "Low" + "\n";
 				break;
 			}
 			case 1: {
-				bloodPressureText.GetComponent<TextMesh>().text = "Medium";
+				final += "Blood Pressre: " + "Medium" + "\n";
 				break;
 			}
 			case 2: {
-				bloodPressureText.GetComponent<TextMesh>().text = "High";
+				final += "Blood Pressre: " + "High" + "\n";
 				break;
 			}
 		}
 
-		if (GameManager.instance.GetIV()) {
-			ivText.GetComponent<TextMesh>().text = "Yes";
+		if (GameManager.instance.GetIV) {
+			final += "Needs IV: " + "Yes" + "\n";
 		} else {
-			ivText.GetComponent<TextMesh>().text = "No";
+			final += "Needs IV: " + "No" + "\n";
 		}
 
-		switch (GameManager.instance.GetMedication()) {
+		switch (GameManager.instance.GetMedication) {
 			case 0: {
-				medicationText.GetComponent<TextMesh>().text = "Sleep";
+				final += "Medication for: " + "Sleep" + "\n";
 				break;
 			}
 			case 1: {
-				medicationText.GetComponent<TextMesh>().text = "Pain";
+				final += "Medication for: " + "Pain" + "\n";
 				break;
 			}
 			case 2: {
-				medicationText.GetComponent<TextMesh>().text = "Antibiotics";
+				final += "Medication for: " + "Antibiotics" + "\n";
 				break;
 			}
 		}
 
-		switch (GameManager.instance.GetAssessment()) {
+		switch (GameManager.instance.GetAssessment) {
 			case 0: {
-				assessmentText.GetComponent<TextMesh>().text = "Ligma";
+				final += "Assessment: " + "Ligma" + "\n";
 				break;
 			}
 			case 1: {
-				assessmentText.GetComponent<TextMesh>().text = "Hypovolemia";
+				final += "Assessment: " + "Hypovolemia" + "\n";
 				break;
 			}
 			case 2: {
-				assessmentText.GetComponent<TextMesh>().text = "Sepsis";
+				final += "Assessment: " + "Sepsis" + "\n";
 				break;
 			}
 			case 3: {
-				assessmentText.GetComponent<TextMesh>().text = "Hemorrhage";
+				final += "Assessment: " + "Hemorrhage" + "\n";
 				break;
 			}
 			case 4: {
-				assessmentText.GetComponent<TextMesh>().text = "Cardiogenic shock";
+				final += "Assessment: " + "Cardiogenic shock" + "\n";
 				break;
 			}
 		}
+		//Debug.Log(final);
+		return final;
+	}
+
+	public void ActivateContinueButton() {
+		ContinueButton.SetActive(true);
 	}
 }
