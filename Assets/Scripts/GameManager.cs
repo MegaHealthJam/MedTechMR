@@ -111,7 +111,7 @@ public class GameManager : MonoBehaviour {
 	[Tooltip("A function in case we need it to trigger the difference between the info screen and the game's ui")]
 	private void on_show_proceed_button(int roomNumber) {
 		if (roomNumber == GetRoom) {
-			UIManager.instance.ActivateProceedButton();
+			UIManager.instance.ActivateContinueButton();
 		}
 	}
 	#endregion
