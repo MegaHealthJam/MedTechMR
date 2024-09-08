@@ -1,29 +1,44 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.AI;
+using UnityEngine.SceneManagement;
+using Random = UnityEngine.Random;
 
 public class AI : MonoBehaviour
 {
     public float range = 10f; // Range within which the random point is generated
-    private UnityEngine.AI.NavMeshAgent agent;
+    private NavMeshAgent agent;
+
+    private void Awake()
+    {
+        agent = GetComponent<NavMeshAgent>();
+    }
 
     // Start is called before the first frame update
     void Start()
     {
-        agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
+      
         GameManager.OnMissionStarted += save_mission_room_number;
+        SceneManager.sceneLoaded += on_scene_loaded;
         // Move to a random point on the NavMesh when the game starts
         MoveToRandomPoint();
+    }
+
+    private void OnDestroy()
+    {
+        SceneManager.sceneLoaded -= on_scene_loaded;
     }
 
     // This method moves the agent to a random point within the NavMesh
     void MoveToRandomPoint()
     {
         Vector3 randomPoint = GetRandomPointOnNavMesh(transform.position, range);
-        if (randomPoint != Vector3.zero)
+        if (randomPoint != Vector3.zero && agent != null)
         {
-            agent.SetDestination(randomPoint);
+            agent?.SetDestination(randomPoint);
         }
     }
 
@@ -77,6 +92,9 @@ public class AI : MonoBehaviour
     // used during a code blue to move to a target point 
     public void MoveToTargetPoint(Vector3 targetPoint)
     {
+        if (agent == null)
+            return;
+        
         agent.SetDestination(targetPoint);
     }
 
@@ -92,6 +110,11 @@ public class AI : MonoBehaviour
         
         
         
+    }
+
+    private void on_scene_loaded(Scene scene, LoadSceneMode mode)
+    {
+        agent.Warp(agent.transform.position);
     }
 
 }
