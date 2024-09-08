@@ -65,7 +65,7 @@ public class FunctionTimer
    public void Update(){
     if(!isDestroyed){
             timer -= Time.deltaTime;
-            Debug.Log(timer);
+            //Debug.Log(timer);
     if(timer < 0){
         //Trigger the action
         action();
