@@ -8,31 +8,21 @@ public class GameManager : MonoBehaviour {
 	// References
 	public static GameManager instance;
 
-	InfoPopulator infoPopulator = new InfoPopulator();
+	InfoPopulator infoPopulator;
 
 	// public variables
 	#region Private Vars
 	[Tooltip("The total time the player has to play the game in minutes (e.g. 1 = 60 seconds, 0.5 = 30 seconds)")]
 	[SerializeField] private float totalTime = 1.0f;
-	[Tooltip("Put the Mission Scriptable Objects in here")]
-	[SerializeField] private List<So_Missions> missions;
 
 	/// <summary>
 	/// Bool for if the game is active
 	/// </summary>
 	private bool isGameActive = false;
 	/// <summary>
-	/// Bool for if the mission is active
-	/// </summary>
-	private bool isMissionActive = false;
-	/// <summary>
 	/// Players Current Score
 	/// </summary>
 	private int score = 0;
-	/// <summary>
-	/// Players High Score
-	/// </summary>
-	private int highScore = 0;
 	/// <summary>
 	/// Amount of time the player has been playing
 	/// </summary>
@@ -47,23 +37,19 @@ public class GameManager : MonoBehaviour {
 		} else {
 			Destroy(this.gameObject);
 		}
+		infoPopulator = new InfoPopulator();
 	}
 
 	// Start is called before the first frame update
 	void Start() {
-		infoPopulator.Populate();
+		StartGame();
 	}
 
 	// Update is called once per frame
 	void Update() {
 		if (isGameActive) {
 			time += Time.deltaTime;
-			if (isMissionActive) {
-
-			} else {
-				StartMission();
-			}
-			if (time >= totalTime * 60) {
+			if (time >= totalTime * 60.0f) {
 				EndGame();
 			}
 		}
@@ -79,11 +65,10 @@ public class GameManager : MonoBehaviour {
 		time = 0.0f;
 	}
 
-	private void EndGame() {
+	private string EndGame() {
 		isGameActive = false;
-		if (score > highScore) {
-			highScore = score;
-		}
+		// calculate the final score for the player in percentage
+		return score * 25 + "%";
 	}
 
 	[Tooltip("Edit the players score. Negative numbers subtract score.")]
@@ -103,24 +88,26 @@ public class GameManager : MonoBehaviour {
 	#endregion
 
 	#region Mission Methods
-	[Tooltip("Begins the current mission")]
-	public void StartMission() {
-		isMissionActive = true;
+	[Tooltip("A function in case we need it to trigger the difference between the info screen and the game's ui")]
+	public void BigButtonPressed() {
+		UIManager.instance.ActivateContinueButton();
 	}
 	#endregion
 
 	#region Getters
 	[Tooltip("Gets the current time")]
-	public float GetTime() => time;
+	public float GetTime => time;
+	[Tooltip("Gets the time for how long the game will last total")]
+	public float GetTotalTime => totalTime;
 
-	public int GetScore() => score;
+	public int GetScore => score;
 	
-	public bool GetPatientSex() => infoPopulator.sex;
-	public string GetPatientName() => infoPopulator.patientName;
-	public int GetBloodPressure() => infoPopulator.bloodPressure;
-	public bool GetIV() => infoPopulator.iv;
-	public int GetMedication() => infoPopulator.medication;
-	public int GetAssessment() => infoPopulator.assessment;
+	public bool GetPatientSex => infoPopulator.sex;
+	public string GetPatientName => infoPopulator.patientName;
+	public int GetBloodPressure => infoPopulator.bloodPressure;
+	public bool GetIV => infoPopulator.iv;
+	public int GetMedication => infoPopulator.medication;
+	public int GetAssessment => infoPopulator.assessment;
 	#endregion
 	#endregion
 }
