@@ -42,6 +42,8 @@ public class GameManager : MonoBehaviour {
 			Destroy(this.gameObject);
 		}
 		infoPopulator = new InfoPopulator();
+
+		PlayerController.on_player_entered_room += on_show_proceed_button;
 	}
 
 	// Start is called before the first frame update
@@ -107,8 +109,10 @@ public class GameManager : MonoBehaviour {
 
 	#region Mission Methods
 	[Tooltip("A function in case we need it to trigger the difference between the info screen and the game's ui")]
-	public void RoomEntered() {
-		UIManager.instance.ActivateContinueButton();
+	private void on_show_proceed_button(int roomNumber) {
+		if (roomNumber == GetRoom) {
+			UIManager.instance.ActivateProceedButton();
+		}
 	}
 	#endregion
 
