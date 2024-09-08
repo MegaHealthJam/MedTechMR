@@ -31,9 +31,7 @@ public class GameManager : MonoBehaviour {
 	private int roomNumber = 0;
 	#endregion
 
-	#region
-	public UnityEvent<int> OnMissionStarted;
-	#endregion
+	public static event Action<int> OnMissionStarted;
 
 	#region Unity Methods
 	// Singleton
@@ -44,8 +42,6 @@ public class GameManager : MonoBehaviour {
 			Destroy(this.gameObject);
 		}
 		infoPopulator = new InfoPopulator();
-		if (OnMissionStarted == null)
-			OnMissionStarted = new UnityEvent<int>();
 	}
 
 	// Start is called before the first frame update
@@ -67,12 +63,15 @@ public class GameManager : MonoBehaviour {
 	#region Methods
 	#region Game Methods
 	[Tooltip("Start the game")]
-	public void StartGame() {
+	public void StartTheGame() {
+		StartCoroutine(WaitToStartGame());
+	}
+	private void StartGame() {
 		isGameActive = true;
 
-		int randomRoomNumber = Random.Range(1, 13); // 13 is exclusive, so this gives numbers 1-12
+		roomNumber = Random.Range(1, 13); // 13 is exclusive, so this gives numbers 1-12
 
-		OnMissionStarted.Invoke(randomRoomNumber);
+		OnMissionStarted?.Invoke(roomNumber);
 
 		score = 0;
 		time = 0.0f;
@@ -123,6 +122,7 @@ public class GameManager : MonoBehaviour {
 	public float GetTotalTime => totalTime;
 
 	public int GetScore => score;
+	public int GetRoom => roomNumber;
 	
 	public bool GetPatientSex => infoPopulator.sex;
 	public string GetPatientName => infoPopulator.patientName;
@@ -132,4 +132,9 @@ public class GameManager : MonoBehaviour {
 	public int GetAssessment => infoPopulator.assessment;
 	#endregion
 	#endregion
+
+	private IEnumerator WaitToStartGame() {
+		yield return new WaitForSeconds(Random.Range(1f, 6f));
+		StartGame();
+	}
 }
