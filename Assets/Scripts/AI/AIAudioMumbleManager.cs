@@ -12,8 +12,6 @@ public class AIAudioMumbleManager : MonoBehaviour
     public float minVolume = .5f;
     public float maxDistance = 10f;
     
-    
-    
     void Start()
     {
         _audioSource = GetComponent<AudioSource>();
@@ -25,7 +23,17 @@ public class AIAudioMumbleManager : MonoBehaviour
     {
         if (_audioSource && target)
         {
-            
+            float distance = Vector3.Distance(transform.position, target.position);
+            if (distance <= maxDistance)
+            {
+                float normalizedDistance = distance / maxDistance;
+                float volume = Mathf.Lerp(minVolume, maxVolume, normalizedDistance);
+                _audioSource.volume = volume;
+            }
+            else
+            {
+                _audioSource.volume = minVolume;
+            }
         }
     }
 }
