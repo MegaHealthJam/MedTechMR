@@ -56,7 +56,7 @@ public class WristLookDetector : MonoBehaviour
     // Enable or disable the object based on the player's wrist view
     void EnableObject(bool enable)
     {
-        if (objectToEnable != null || !otherPanelObject.activeInHierarchy)
+        if (objectToEnable != null && !otherPanelObject.activeSelf)
         {
             objectToEnable.SetActive(enable);
         }
