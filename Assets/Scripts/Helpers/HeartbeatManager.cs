@@ -33,6 +33,7 @@ public class HeartbeatManager : MonoBehaviour
             if (_currentClipIndex < heartbeatClips.Length - 1)
             {
                 _currentClipIndex = 0;
+                _audioSource.Stop();
                 break;
             }
 
