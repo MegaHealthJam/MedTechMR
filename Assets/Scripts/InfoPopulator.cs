@@ -6,8 +6,7 @@ using Random = UnityEngine.Random;
 /// <summary>
 /// Spawns an interactable object at the location of the object respawner
 /// </summary>
-public class InfoPopulator
-{
+public class InfoPopulator {
 	public bool sex;
 	public string patientName;
 	public int bloodPressure;
@@ -15,7 +14,7 @@ public class InfoPopulator
 	public int medication;
 	public int assessment;
 
-	public void Populate() {
+	public InfoPopulator() {
 		Sex();
 		PatientName();
 		BloodPressure();
@@ -23,6 +22,10 @@ public class InfoPopulator
 		Medication();
 		AssessmentList();
 	}
+
+	//public void Populate() {
+	//	
+	//}
 
 	private void Sex() {
 		switch (Random.Range(0, 2)) {

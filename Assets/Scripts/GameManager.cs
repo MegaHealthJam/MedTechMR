@@ -8,14 +8,12 @@ public class GameManager : MonoBehaviour {
 	// References
 	public static GameManager instance;
 
-	InfoPopulator infoPopulator = new InfoPopulator();
+	InfoPopulator infoPopulator;
 
 	// public variables
 	#region Private Vars
 	[Tooltip("The total time the player has to play the game in minutes (e.g. 1 = 60 seconds, 0.5 = 30 seconds)")]
 	[SerializeField] private float totalTime = 1.0f;
-	[Tooltip("Put the Mission Scriptable Objects in here")]
-	[SerializeField] private List<So_Missions> missions;
 
 	/// <summary>
 	/// Bool for if the game is active
@@ -39,11 +37,12 @@ public class GameManager : MonoBehaviour {
 		} else {
 			Destroy(this.gameObject);
 		}
+		infoPopulator = new InfoPopulator();
 	}
 
 	// Start is called before the first frame update
 	void Start() {
-		infoPopulator.Populate();
+		StartGame();
 	}
 
 	// Update is called once per frame
@@ -91,24 +90,24 @@ public class GameManager : MonoBehaviour {
 	#region Mission Methods
 	[Tooltip("A function in case we need it to trigger the difference between the info screen and the game's ui")]
 	public void BigButtonPressed() {
-		
+		UIManager.instance.ActivateContinueButton();
 	}
 	#endregion
 
 	#region Getters
 	[Tooltip("Gets the current time")]
-	public float GetTime() => time;
+	public float GetTime => time;
 	[Tooltip("Gets the time for how long the game will last total")]
-	public float GetTotalTime() => totalTime;
+	public float GetTotalTime => totalTime;
 
-	public int GetScore() => score;
+	public int GetScore => score;
 	
-	public bool GetPatientSex() => infoPopulator.sex;
-	public string GetPatientName() => infoPopulator.patientName;
-	public int GetBloodPressure() => infoPopulator.bloodPressure;
-	public bool GetIV() => infoPopulator.iv;
-	public int GetMedication() => infoPopulator.medication;
-	public int GetAssessment() => infoPopulator.assessment;
+	public bool GetPatientSex => infoPopulator.sex;
+	public string GetPatientName => infoPopulator.patientName;
+	public int GetBloodPressure => infoPopulator.bloodPressure;
+	public bool GetIV => infoPopulator.iv;
+	public int GetMedication => infoPopulator.medication;
+	public int GetAssessment => infoPopulator.assessment;
 	#endregion
 	#endregion
 }
