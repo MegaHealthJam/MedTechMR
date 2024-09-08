@@ -23,7 +23,7 @@ public class UIManager : MonoBehaviour {
 
 	// Start is called before the first frame update
 	void Start() {
-		patientInfotext.GetComponent<TMP_Text>().text = GetInfo();
+		//patientInfotext.GetComponent<TMP_Text>().text = GetInfo();
 	}
 
 	// Update is called once per frame
@@ -36,6 +36,11 @@ public class UIManager : MonoBehaviour {
 		int minutes = (int) timeleft / 60;
 		int seconds = (int) timeleft % 60;
 		timertext.GetComponent<TMP_Text>().text = string.Format("{0:0}:{1:00}", minutes, seconds);
+	}
+
+
+	public void UpdateInfo() {
+		patientInfotext.GetComponent<TMP_Text>().text = GetInfo();
 	}
 
 	private string GetInfo() {

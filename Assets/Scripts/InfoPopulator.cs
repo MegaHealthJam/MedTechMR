@@ -47,12 +47,11 @@ public class InfoPopulator {
 		List<string> Femalelist = new List<string>();
 
 		Malelist.Add("John Doe");
-		Malelist.Add("Danny Tapia");
-		Malelist.Add("Timothy Forest");
-		Malelist.Add("Delano Igbinoba");
-		Malelist.Add("Kunal Patel");
+		Malelist.Add("Michel Scott");
+		Malelist.Add("Master Cheif");
 
-		Femalelist.Add("Isabella Johnston");
+		Femalelist.Add("Jane Doe");
+		Femalelist.Add("Lara Croft");
 
 		if (sex) { // female
 			patientName = Femalelist[Random.Range(0, Femalelist.Count)];

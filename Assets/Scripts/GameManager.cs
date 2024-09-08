@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour {
 	/// Amount of time the player has been playing
 	/// </summary>
 	private float time = 0.0f;
-	private int roomNumber = 0;
+	private int roomNumber;
 	#endregion
 
 	public static event Action<int> OnMissionStarted;
@@ -70,8 +70,9 @@ public class GameManager : MonoBehaviour {
 		StartCoroutine(WaitToStartGame());
 	}
 	private void StartGame() {
-		isGameActive = true;
 		roomNumber = Random.Range(1, 13); // 13 is exclusive, so this gives numbers 1-12
+		isGameActive = true;
+		UIManager.instance.UpdateInfo();
 		OnMissionStarted?.Invoke(roomNumber);
 		score = 0;
 		time = 0.0f;
@@ -126,6 +127,8 @@ public class GameManager : MonoBehaviour {
 	public float GetTime => time;
 	[Tooltip("Gets the time for how long the game will last total")]
 	public float GetTotalTime => totalTime;
+
+	public bool GetGameActive => isGameActive;
 
 	public int GetScore => score;
 	public int GetRoom => roomNumber;
