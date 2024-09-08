@@ -29,6 +29,8 @@ namespace Unity.VRTemplate
         int m_CurrentStepIndex = 0;
         public GameObject oldContinueButton;
         public GameObject infoPanel;
+        public GameManager gameManager;
+
         public void Next()
         {
             m_StepList[m_CurrentStepIndex].stepObject.SetActive(false);
@@ -44,6 +46,10 @@ namespace Unity.VRTemplate
         }
         public void ClosePanel(){
             infoPanel.SetActive(false);
+            //Start the game
+            gameManager.StartTheGame();
+
+            
         }
     }
 }

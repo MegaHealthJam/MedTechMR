@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Animations;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
@@ -9,7 +10,8 @@ using Random = UnityEngine.Random;
 public class GameManager : MonoBehaviour {
 	// References
 	public static GameManager instance;
-
+	public GameObject wristCanvasPanel;
+	public GameObject wristFailPanel;
 	InfoPopulator infoPopulator;
 
 	// public variables
@@ -82,7 +84,20 @@ public class GameManager : MonoBehaviour {
 	public string EndGame() {
 		isGameActive = false;
 		// calculate the final score for the player in percentage
+		
+		//Set the old panel to off
+		wristCanvasPanel.SetActive(false);
+		for(int i = 0; i < wristCanvasPanel.transform.childCount; i++){
+			var child = wristCanvasPanel.transform.GetChild(i).gameObject;
+			if(child != null){
+				child.SetActive(false);
+			}
+		}
+		//Set new panel on
+		wristFailPanel.SetActive(true);
 		return score * 25 + "%";
+
+		
 	}
 
 	public void RestartGame() {
