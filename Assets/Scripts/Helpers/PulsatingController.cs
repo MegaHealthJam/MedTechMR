@@ -7,17 +7,12 @@ public class PulsatingController : MonoBehaviour
 {
 
     [SerializeField] private Material pulseMaterial;
-    [SerializeField] private float pulseSpeed = 2f;
-    [SerializeField] private float pulseAmount = 0;
-
-    private bool increasePulse;
-    private bool canPulse;
-
-
-    public void Start()
-    {
-        StartCoroutine(PulseOverTime());
-    }
+    
+    private DateTime alarmTimer;
+    private float initialTime;
+    private float minAlpha = 0;
+    private float maxAlpha = .3f;
+    private bool alarmSet;
 
     private void OnDestroy()
     {
@@ -26,55 +21,50 @@ public class PulsatingController : MonoBehaviour
 
     private void Update()
     {
-        if (canPulse)
+        if (alarmSet)
         {
-            if (increasePulse)
+            TimeSpan timeLeft = alarmTimer - DateTime.Now;
+            float timeRemaining = (float)timeLeft.TotalSeconds;
+
+            if (timeRemaining <= 0)
             {
-                pulseAmount += pulseSpeed * Time.deltaTime;
-                if (pulseAmount >= .35f)
-                    increasePulse = false;
+                TriggerAlarm();
             }
             else
             {
-                pulseAmount -= pulseSpeed * (Time.deltaTime);
-                if (pulseAmount <= 0)
-                {
-                    pulseAmount = 0;
-                    increasePulse = true;
-                }
+                PulseAlpha(timeRemaining);
             }
         }
-        else
-        {
-            pulseAmount -= pulseSpeed * (Time.deltaTime);
-            if (pulseAmount <= 0)
-            {
-                pulseAmount = 0;
-                increasePulse = true;
-            }
-        }
-        
-        pulseMaterial.color = new Color(pulseMaterial.color.r, pulseMaterial.color.g, pulseMaterial.color.b, pulseAmount);
     }
 
-    public void IncreasePulse()
+    public void SetAlarm(float timerInSeconds)
     {
-        canPulse = true;
+        alarmTimer = DateTime.Now.AddMinutes(timerInSeconds/60);
+        alarmSet = true;
+
+        initialTime = timerInSeconds;
     }
 
-    public void StopPulse()
+    private void TriggerAlarm()
     {
-        canPulse = false;
+        alarmSet = false;
+        pulseMaterial.color = new Color(pulseMaterial.color.r, pulseMaterial.color.g, pulseMaterial.color.b, 0);
     }
 
-    private IEnumerator PulseOverTime()
+    private void PulseAlpha(float timeRemaining)
     {
-        while (true)
-        {
-            IncreasePulse();
-            yield return new WaitForSeconds(5f);
-            StopPulse();
-            yield return new WaitForSeconds(5f);
-        }
+        float normalizedTimeRemaining = timeRemaining / initialTime;
+
+        float pulseSpeed = Mathf.Lerp(0.5f, 5, 1 - normalizedTimeRemaining);
+
+        float alpha = Mathf.Lerp(minAlpha, maxAlpha, (Mathf.Sin(Time.time * pulseSpeed) + 1) / 2);
+
+        SetAlpha(alpha);
     }
+
+    private void SetAlpha(float alpha)
+    {
+        pulseMaterial.color = new Color(pulseMaterial.color.r, pulseMaterial.color.g, pulseMaterial.color.b, alpha);
+    }
+
 }

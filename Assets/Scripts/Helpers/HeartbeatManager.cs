@@ -20,6 +20,7 @@ public class HeartbeatManager : MonoBehaviour
         StartCoroutine(SwitchTracks());
     }
 
+    
     private IEnumerator SwitchTracks()
     {
         while (true)
@@ -28,14 +29,21 @@ public class HeartbeatManager : MonoBehaviour
             _audioSource.Play();
             
             yield return new WaitForSeconds(countdownTime/heartbeatClips.Length);
-            
+
+            if (_currentClipIndex < heartbeatClips.Length - 1)
+            {
+                _currentClipIndex = 0;
+                break;
+            }
+
             _currentClipIndex = (_currentClipIndex + 1) % heartbeatClips.Length;
         }
     }
 
 
-    public void restartTimer()
+    public void SetHeartbeatAlarm(float timeInSeconds)
     {
-        _currentTime = countdownTime;
+        countdownTime = timeInSeconds;
+        StartCoroutine(SwitchTracks());
     }
 }

@@ -17,8 +17,6 @@ public class MusicSpeedModifier : MonoBehaviour
     private Button someButton;
     private void Start()
     {
-        
-        
         if(_audioSource == null)
             _audioSource = GetComponent<AudioSource>();
 
