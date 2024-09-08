@@ -42,7 +42,6 @@ namespace Unity.VRTemplate
                 oldContinueButton.SetActive(true);
             }
         }
-
         public void ClosePanel(){
             infoPanel.SetActive(false);
         }
