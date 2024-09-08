@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -162,6 +163,9 @@ public class GameManager : MonoBehaviour {
 
 	public int GetMissionCount() {
 		return missionList.Count;
+	}
+	public void BeginMission(){
+		Debug.Log("Mission is started");
 	}
 	#endregion
 	#endregion
