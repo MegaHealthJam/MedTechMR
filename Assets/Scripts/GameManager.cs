@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -113,7 +114,7 @@ public class GameManager : MonoBehaviour {
 	public float GetTime() => time;
 
 	public int GetScore() => score;
-
+	
 	public bool GetPatientSex() => infoPopulator.sex;
 	public string GetPatientName() => infoPopulator.patientName;
 	public int GetBloodPressure() => infoPopulator.bloodPressure;

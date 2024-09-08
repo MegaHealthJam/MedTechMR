@@ -19,4 +19,8 @@ public class So_Missions : ScriptableObject
     public int GetCompletionScore() {
         return completionScore;
     }
+
+    public GameObject SpawnMissionPrefab(){
+        return missionPrefab;
+    }
 }
