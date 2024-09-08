@@ -22,17 +22,9 @@ public class GameManager : MonoBehaviour {
 	/// </summary>
 	private bool isGameActive = false;
 	/// <summary>
-	/// Bool for if the mission is active
-	/// </summary>
-	private bool isMissionActive = false;
-	/// <summary>
 	/// Players Current Score
 	/// </summary>
 	private int score = 0;
-	/// <summary>
-	/// Players High Score
-	/// </summary>
-	private int highScore = 0;
 	/// <summary>
 	/// Amount of time the player has been playing
 	/// </summary>
@@ -58,12 +50,7 @@ public class GameManager : MonoBehaviour {
 	void Update() {
 		if (isGameActive) {
 			time += Time.deltaTime;
-			if (isMissionActive) {
-
-			} else {
-				StartMission();
-			}
-			if (time >= totalTime * 60) {
+			if (time >= totalTime * 60.0f) {
 				EndGame();
 			}
 		}
@@ -79,11 +66,10 @@ public class GameManager : MonoBehaviour {
 		time = 0.0f;
 	}
 
-	private void EndGame() {
+	private string EndGame() {
 		isGameActive = false;
-		if (score > highScore) {
-			highScore = score;
-		}
+		// calculate the final score for the player in percentage
+		return score * 25 + "%";
 	}
 
 	[Tooltip("Edit the players score. Negative numbers subtract score.")]
@@ -103,15 +89,17 @@ public class GameManager : MonoBehaviour {
 	#endregion
 
 	#region Mission Methods
-	[Tooltip("Begins the current mission")]
-	public void StartMission() {
-		isMissionActive = true;
+	[Tooltip("A function in case we need it to trigger the difference between the info screen and the game's ui")]
+	public void BigButtonPressed() {
+		
 	}
 	#endregion
 
 	#region Getters
 	[Tooltip("Gets the current time")]
 	public float GetTime() => time;
+	[Tooltip("Gets the time for how long the game will last total")]
+	public float GetTotalTime() => totalTime;
 
 	public int GetScore() => score;
 	

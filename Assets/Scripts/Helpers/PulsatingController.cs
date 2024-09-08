@@ -3,8 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ScreenController : MonoBehaviour
+public class PulsatingController : MonoBehaviour
 {
+
     [SerializeField] private Material pulseMaterial;
     [SerializeField] private float pulseSpeed = 2f;
     [SerializeField] private float pulseAmount = 0;
@@ -18,6 +19,11 @@ public class ScreenController : MonoBehaviour
         StartCoroutine(PulseOverTime());
     }
 
+    private void OnDestroy()
+    {
+        pulseMaterial.color = new Color(pulseMaterial.color.r, pulseMaterial.color.g, pulseMaterial.color.b, 0f);
+    }
+
     private void Update()
     {
         if (canPulse)
@@ -25,7 +31,7 @@ public class ScreenController : MonoBehaviour
             if (increasePulse)
             {
                 pulseAmount += pulseSpeed * Time.deltaTime;
-                if (pulseAmount >= 1)
+                if (pulseAmount >= .35f)
                     increasePulse = false;
             }
             else
@@ -48,12 +54,7 @@ public class ScreenController : MonoBehaviour
             }
         }
         
-        pulseMaterial.SetFloat("_PulseAmount", Mathf.Clamp01(pulseAmount));
-    }
-
-    private void OnRenderImage(RenderTexture source, RenderTexture destination)
-    {
-        Graphics.Blit(source, destination, pulseMaterial);
+        pulseMaterial.color = new Color(pulseMaterial.color.r, pulseMaterial.color.g, pulseMaterial.color.b, pulseAmount);
     }
 
     public void IncreasePulse()
