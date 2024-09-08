@@ -78,15 +78,32 @@ public class GameManager : MonoBehaviour {
 		time = 0.0f;
 	}
 
-	private string EndGame() {
+	public string EndGame() {
 		isGameActive = false;
 		// calculate the final score for the player in percentage
 		return score * 25 + "%";
 	}
 
-	[Tooltip("Edit the players score. Negative numbers subtract score.")]
-	public void AddScore(int value) {
-		score += value;
+	[Tooltip("Edit the players score.")]
+	public void BloodPressureScore(int value) {
+		if (value == GetBloodPressure) {
+			score += 1;
+		}
+	}
+	public void IVScore(bool value) {
+		if (value == GetIV) {
+			score += 1;
+		}
+	}
+	public void MedicationScore(int value) {
+		if (value == GetMedication) {
+			score += 1;
+		}
+	}
+	public void AssessmentScore(int value) {
+		if (value == GetAssessment) {
+			score += 1;
+		}
 	}
 	#endregion
 
@@ -94,6 +111,8 @@ public class GameManager : MonoBehaviour {
 	[Tooltip("A function in case we need it to trigger the difference between the info screen and the game's ui")]
 	public void BigButtonPressed() {
 		UIManager.instance.ActivateContinueButton();
+		PlayerController.instance.PulseController.SetAlarm((GameManager.instance.GetTotalTime * 60) - GameManager.instance.GetTime);
+		PlayerController.instance.HeartbeatSound.SetHeartbeatAlarm((GameManager.instance.GetTotalTime * 60) - GameManager.instance.GetTime);
 	}
 	#endregion
 

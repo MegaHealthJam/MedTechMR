@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+   public static PlayerController instance;
+   
+   [SerializeField] private PulsatingController pulseController;
+   [SerializeField] private HeartbeatManager heartbeatManager;
    public float moveSpeed = 5f;
    public float lookSpeed = 2f;
    public float jumpForce = 5f;
@@ -13,7 +17,17 @@ public class PlayerController : MonoBehaviour
 
    private float _xRotation;
    private int _roomNumber;
-   
+
+   private void Awake()
+   {
+      if (instance == null)
+         instance = this;
+      else 
+         Destroy(gameObject);
+   }
+
+   public PulsatingController PulseController => pulseController;
+   public HeartbeatManager HeartbeatSound => heartbeatManager;
    // Start is called before the first frame update
    void Start()
    {
