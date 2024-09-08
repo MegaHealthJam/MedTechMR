@@ -68,13 +68,12 @@ public class GameManager : MonoBehaviour {
 	}
 	private void StartGame() {
 		isGameActive = true;
-
 		roomNumber = Random.Range(1, 13); // 13 is exclusive, so this gives numbers 1-12
-
 		OnMissionStarted?.Invoke(roomNumber);
-
 		score = 0;
 		time = 0.0f;
+		PlayerController.instance.PulseController.SetAlarm((GameManager.instance.GetTotalTime * 60) - GameManager.instance.GetTime);
+		PlayerController.instance.HeartbeatSound.SetHeartbeatAlarm((GameManager.instance.GetTotalTime * 60) - GameManager.instance.GetTime);
 	}
 
 	public string EndGame() {
@@ -108,10 +107,8 @@ public class GameManager : MonoBehaviour {
 
 	#region Mission Methods
 	[Tooltip("A function in case we need it to trigger the difference between the info screen and the game's ui")]
-	public void BigButtonPressed() {
+	public void RoomEntered() {
 		UIManager.instance.ActivateContinueButton();
-		PlayerController.instance.PulseController.SetAlarm((GameManager.instance.GetTotalTime * 60) - GameManager.instance.GetTime);
-		PlayerController.instance.HeartbeatSound.SetHeartbeatAlarm((GameManager.instance.GetTotalTime * 60) - GameManager.instance.GetTime);
 	}
 	#endregion
 
