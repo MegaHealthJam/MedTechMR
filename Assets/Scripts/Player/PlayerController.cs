@@ -71,13 +71,9 @@ public class PlayerController : MonoBehaviour
       }
    }
 
-   private void OnTriggerEnter(Collider other)
+   private void OnTriggerExit(Collider other)
    {
       _roomNumber = 0;
    }
-
-   public int get_curren_room_number()
-   {
-      return _roomNumber;
-   }
+   
 }
