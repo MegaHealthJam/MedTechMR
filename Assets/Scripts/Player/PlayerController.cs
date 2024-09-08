@@ -5,6 +5,10 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
    public static PlayerController instance;
+
+   public static event Action<int> on_player_entered_room;
+   
+   
    
    [SerializeField] private PulsatingController pulseController;
    [SerializeField] private HeartbeatManager heartbeatManager;
@@ -77,14 +81,20 @@ public class PlayerController : MonoBehaviour
    }
 
 
-   private void OnTriggerStay(Collider other)
+   private void OnTriggerEnter(Collider other)
    {
       if (other.CompareTag("Room"))
       {
-         _roomNumber = int.Parse(other.gameObject.name);
+         var newRoomNum = int.Parse(other.gameObject.name);
+         if (_roomNumber != newRoomNum)
+         {
+            Debug.Log($"Yoda we entered room {newRoomNum}");
+            _roomNumber = newRoomNum;
+            on_player_entered_room?.Invoke(_roomNumber);
+         }
       }
    }
-
+   
    private void OnTriggerExit(Collider other)
    {
       _roomNumber = 0;
