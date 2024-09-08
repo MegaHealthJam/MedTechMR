@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour {
@@ -48,7 +49,7 @@ public class GameManager : MonoBehaviour {
 
 	// Start is called before the first frame update
 	void Start() {
-		
+		//StartTheGame();
 	}
 
 	// Update is called once per frame
@@ -82,6 +83,10 @@ public class GameManager : MonoBehaviour {
 		isGameActive = false;
 		// calculate the final score for the player in percentage
 		return score * 25 + "%";
+	}
+
+	public void RestartGame() {
+		SceneManager.LoadScene("BasicScene");
 	}
 
 	[Tooltip("Edit the players score.")]

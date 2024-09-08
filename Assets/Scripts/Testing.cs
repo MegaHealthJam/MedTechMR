@@ -23,8 +23,6 @@ public class Testing : MonoBehaviour
     private void TestingAction2(){
         Debug.Log("Code Red on Patient 8");
     }
-
-     
  
     public string SetScreenInfo(){
         int randomNumber = UnityEngine.Random.Range(1, 8);
