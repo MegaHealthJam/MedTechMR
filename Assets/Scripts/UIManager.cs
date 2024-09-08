@@ -11,6 +11,7 @@ public class UIManager : MonoBehaviour {
 	public GameObject continueButton;
 	public GameObject scoreText;
 	public GameObject patientNameText;
+	public GameObject RoomNumberText;
 
 	void Awake() {
 		if (instance == null) {
@@ -38,6 +39,9 @@ public class UIManager : MonoBehaviour {
 	}
 
 	private string GetInfo() {
+		RoomNumberText.GetComponent<TMP_Text>().text = "Room Number: " + GameManager.instance.GetRoom;
+		patientNameText.GetComponent<TMP_Text>().text = GameManager.instance.GetPatientName;
+
 		string final = "";
 		final += "Name: " + GameManager.instance.GetPatientName + "\n";
 		
@@ -116,9 +120,5 @@ public class UIManager : MonoBehaviour {
 
 	public void UpdateScore() {
 		scoreText.GetComponent<TMP_Text>().text = "Score: " + GameManager.instance.EndGame();
-	}
-
-	public void UpdatePatientName() {
-		patientNameText.GetComponent<TMP_Text>().text = GameManager.instance.GetPatientName;
 	}
 }
