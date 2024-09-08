@@ -44,6 +44,7 @@ public class HeartbeatManager : MonoBehaviour
     public void SetHeartbeatAlarm(float timeInSeconds)
     {
         countdownTime = timeInSeconds;
+        IntercomManager.instance.FireCodeBlue();
         StartCoroutine(SwitchTracks());
     }
 }
