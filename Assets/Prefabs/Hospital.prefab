@@ -35747,6 +35747,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 4003584589439458832}
     m_Modifications:
+    - target: {fileID: 2020930013254351189, guid: 3dd74f2c63e86b344a070c8ee34493c4, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7851852693939144473, guid: 3dd74f2c63e86b344a070c8ee34493c4, type: 3}
       propertyPath: m_Name
       value: Bed (4)
