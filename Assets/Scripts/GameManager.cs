@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour {
@@ -27,6 +28,11 @@ public class GameManager : MonoBehaviour {
 	/// Amount of time the player has been playing
 	/// </summary>
 	private float time = 0.0f;
+	private int roomNumber = 0;
+	#endregion
+
+	#region
+	public UnityEvent<int> OnMissionStarted;
 	#endregion
 
 	#region Unity Methods
@@ -38,11 +44,13 @@ public class GameManager : MonoBehaviour {
 			Destroy(this.gameObject);
 		}
 		infoPopulator = new InfoPopulator();
+		if (OnMissionStarted == null)
+			OnMissionStarted = new UnityEvent<int>();
 	}
 
 	// Start is called before the first frame update
 	void Start() {
-		StartGame();
+		
 	}
 
 	// Update is called once per frame
@@ -61,6 +69,11 @@ public class GameManager : MonoBehaviour {
 	[Tooltip("Start the game")]
 	public void StartGame() {
 		isGameActive = true;
+
+		int randomRoomNumber = Random.Range(1, 13); // 13 is exclusive, so this gives numbers 1-12
+
+		OnMissionStarted.Invoke(randomRoomNumber);
+
 		score = 0;
 		time = 0.0f;
 	}
@@ -74,16 +87,6 @@ public class GameManager : MonoBehaviour {
 	[Tooltip("Edit the players score. Negative numbers subtract score.")]
 	public void AddScore(int value) {
 		score += value;
-	}
-
-	[Tooltip("Pause the game timer")]
-	public void PauseTimer() {
-		isGameActive = false;
-	}
-
-	[Tooltip("Resume the game timer")]
-	public void ResumeTimer() {
-		isGameActive = true;
 	}
 	#endregion
 
