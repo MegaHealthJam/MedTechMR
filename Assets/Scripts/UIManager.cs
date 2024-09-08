@@ -9,6 +9,7 @@ public class UIManager : MonoBehaviour {
 	public GameObject ivText;
 	public GameObject medicationText;
 	public GameObject assessmentText;
+	public GameObject timertext;
 
 	// Start is called before the first frame update
 	void Start() {
@@ -17,7 +18,14 @@ public class UIManager : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update() {
+		UpdateTimer();
+	}
 
+	private void UpdateTimer() {
+		float timeleft = GameManager.instance.GetTotalTime() - GameManager.instance.GetTime();
+		int minutes = (int) timeleft / 60;
+		int seconds = (int) timeleft % 60;
+		timertext.GetComponent<TextMesh>().text = string.Format("{0:0}:{1:00}", minutes, seconds);
 	}
 
 	private void GetInfo() {
@@ -83,7 +91,7 @@ public class UIManager : MonoBehaviour {
 				break;
 			}
 			case 4: {
-				assessmentText.GetComponent<TextMesh>().text = "Cardiogenic Shock";
+				assessmentText.GetComponent<TextMesh>().text = "Cardiogenic shock";
 				break;
 			}
 		}
