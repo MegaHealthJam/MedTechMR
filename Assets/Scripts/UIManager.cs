@@ -86,7 +86,7 @@ public class UIManager : MonoBehaviour {
 
 		switch (GameManager.instance.GetAssessment) {
 			case 0: {
-				final += "Assessment: " + "Ligma" + "\n";
+				final += "Assessment: " + "Covid" + "\n";
 				break;
 			}
 			case 1: {

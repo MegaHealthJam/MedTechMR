@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
 public class GameManager : MonoBehaviour {
@@ -27,7 +28,10 @@ public class GameManager : MonoBehaviour {
 	/// Amount of time the player has been playing
 	/// </summary>
 	private float time = 0.0f;
+	private int roomNumber = 0;
 	#endregion
+
+	public static event Action<int> OnMissionStarted;
 
 	#region Unity Methods
 	// Singleton
@@ -42,7 +46,7 @@ public class GameManager : MonoBehaviour {
 
 	// Start is called before the first frame update
 	void Start() {
-		StartGame();
+		
 	}
 
 	// Update is called once per frame
@@ -59,8 +63,16 @@ public class GameManager : MonoBehaviour {
 	#region Methods
 	#region Game Methods
 	[Tooltip("Start the game")]
-	public void StartGame() {
+	public void StartTheGame() {
+		StartCoroutine(WaitToStartGame());
+	}
+	private void StartGame() {
 		isGameActive = true;
+
+		roomNumber = Random.Range(1, 13); // 13 is exclusive, so this gives numbers 1-12
+
+		OnMissionStarted?.Invoke(roomNumber);
+
 		score = 0;
 		time = 0.0f;
 	}
@@ -92,16 +104,6 @@ public class GameManager : MonoBehaviour {
 			score += 1;
 		}
 	}
-
-	[Tooltip("Pause the game timer")]
-	public void PauseTimer() {
-		isGameActive = false;
-	}
-
-	[Tooltip("Resume the game timer")]
-	public void ResumeTimer() {
-		isGameActive = true;
-	}
 	#endregion
 
 	#region Mission Methods
@@ -120,6 +122,7 @@ public class GameManager : MonoBehaviour {
 	public float GetTotalTime => totalTime;
 
 	public int GetScore => score;
+	public int GetRoom => roomNumber;
 	
 	public bool GetPatientSex => infoPopulator.sex;
 	public string GetPatientName => infoPopulator.patientName;
@@ -129,4 +132,9 @@ public class GameManager : MonoBehaviour {
 	public int GetAssessment => infoPopulator.assessment;
 	#endregion
 	#endregion
+
+	private IEnumerator WaitToStartGame() {
+		yield return new WaitForSeconds(Random.Range(1f, 6f));
+		StartGame();
+	}
 }
