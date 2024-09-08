@@ -18,7 +18,7 @@ public class Testing : MonoBehaviour
         //FunctionTimer.StopTimer("Timer");
     }
     private void TestingAction(){
-        SetScreenInfo();
+        //SetScreenInfo();
     }
     private void TestingAction2(){
         Debug.Log("Code Red on Patient 8");

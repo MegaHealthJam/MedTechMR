@@ -11,7 +11,7 @@ public class AI : MonoBehaviour
     void Start()
     {
         agent = GetComponent<UnityEngine.AI.NavMeshAgent>();
-
+        
         // Move to a random point on the NavMesh when the game starts
         MoveToRandomPoint();
     }
